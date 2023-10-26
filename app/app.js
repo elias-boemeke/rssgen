@@ -1,21 +1,25 @@
-// basics to make the application work
-const express = require('express')
-const app = express()
-const port = 3000
+// imports
+const express = require('express');
 
-// static imports
+const dotenv = require('dotenv');
+const environment = process.env.NODE_ENV || 'development';
+dotenv.config({path: `.env.${environment}`});
+
+// rssgen import
 const rssgen = require('./rssgen.js');
 
-// CONSTANTS
+// result of the user-query
 const GOOD = true;
 const BAD = false;
 
 function logError(err) {
     // debug errors
-	console.log(error);
+	console.log(err);
     console.log(`[ERR] errorcode: ${err.code}`);
 }
 
+// create the server
+const app = express();
 // main process
 app.get('*', async (req, res) => {
 	try {
@@ -29,7 +33,7 @@ app.get('*', async (req, res) => {
 		if (ok) {
 			//res.setHeader('Content-Type', 'application/rss+xml');
 			res.setHeader('Content-Type', 'text/xml');
-			res.send(rssgen.formatXml(msg));
+			res.send(rssgen.prettify_xml(msg));
 		} else {
 			let showexample = `\n\nPlease read the examples in README.md (in the git repo) to ensure the request is valid.`;
 			res.setHeader('Content-Type', 'text/plain');
@@ -37,7 +41,7 @@ app.get('*', async (req, res) => {
 		}
 
 	} catch (error) { // global error handling
-		console.log(error);
+		logError(error);
 		res.setHeader('Content-Type', 'text/plain');
 		res.send(`Oops. Something went wrong.  (・_・)`);
 	}
@@ -57,24 +61,7 @@ async function handle_request(reqspl) {
 	let handle = reqspl[0];
 	let arg = reqspl.slice(1).join('/');
 
-	// get the items by crawling the site formatted as:
-	// rss: {
-	// 		channel: {
-	//	 		title:
-	//	 		link:
-	//			description:
-	//			language:
-	//		}
-	//		items: [
-	//			{
-	//				title:
-	//				link:
-	//				pubDate:
-	//				description:
-	//			},
-	//			...	
-	//		]
-	// }
+	// get the items by crawling the site formatted as specified in rssgen_format.txt
 	let rss;
 	try {
 		let handlerFunction = require(`./handlers/${handle}.js`);
@@ -86,12 +73,18 @@ async function handle_request(reqspl) {
 		}
 
 	} catch (error) {
+		if (process.env.DEBUG === 'on') { // this is error logging for development
+			logError(error);
+		}
+
 		if (error.code === 'MODULE_NOT_FOUND') {
 			responseStr = `Request not supported - No handler. Aborting. Bye.`;
 		} else if (error.code === 'ERR_BAD_REQUEST') {
 			responseStr = `Request failed. Please ensure the requested channel name exists. Aborting. Bye.`;
 		} else {
-			logError(error);
+			if (process.env.DEBUG === 'off') { // this is error logging for production
+				logError(error)
+			}
 			responseStr = `Unknown Error. Aborting. Bye.`;
 		}
 		// finalize
@@ -111,7 +104,14 @@ async function handle_request(reqspl) {
 } // end of the main process
 
 // start the app
-app.listen(port, () => {
-	console.log(`rssgen app listening on port ${port}`);
+app.listen(process.env.PORT, () => {
+	console.log(`rssgen app listening on port ${process.env.PORT}`);
+	process.stdout.write(`operational mode: `);
+	const c_red = '\x1b[31m%s\x1b[0m';
+	if (environment === 'development') {
+		console.log(c_red, `${environment}`);
+	} else {
+		console.log(`${environment}`);
+	}
 });
 

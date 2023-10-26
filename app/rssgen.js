@@ -4,7 +4,7 @@ const xml = require('xml');
 // exports
 module.exports = {
     rss_to_xml: rss_to_xml,
-    formatXml: formatXml,
+    prettify_xml: prettify_xml,
 };
 
 function rss_to_xml(rss) {
@@ -75,7 +75,8 @@ function rss_to_xml(rss) {
     return xml(feedObject);
 }
 
-function formatXml(xml, tab) { // tab = optional indent value, default is tab (\t)
+// prettifies xml with linebreaks and indentation
+function prettify_xml(xml, tab) { // tab = optional indent value, default is tab (\t)
     var formatted = '', indent= '';
     tab = tab || '\t';
     xml.split(/>\s*</).forEach(function(node) {
@@ -102,4 +103,3 @@ function getRFC822Date(date) {
     
     return `${day}, ${dayOfMonth} ${month} ${year} ${hours}:${minutes}:${seconds} GMT`;
 }
-    

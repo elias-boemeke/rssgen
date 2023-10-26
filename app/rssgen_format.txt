@@ -1,0 +1,19 @@
+# this is the format of an rss object
+# which a handler is expected to yield
+rss: {
+	channel: {
+ 		title:
+ 		link:
+		description:
+		language:
+	}
+	items: [
+		{
+			title:
+			link:
+			pubDate:
+			description:
+		},
+		...	
+	]
+}

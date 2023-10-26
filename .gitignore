@@ -130,5 +130,9 @@ dist
 .pnp.*
 
 # custom ignores
-publish-rsync.sh
-cache/*
+<<<<<<< HEAD
+dev/html/*
+=======
+myuseragent.txt
+dev/
+>>>>>>> refs/remotes/origin/master
