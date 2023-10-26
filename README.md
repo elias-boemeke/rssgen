@@ -4,7 +4,7 @@ Currently supported websites include:
 1. `https://rumble.com` - `https://<selfhost.server>/rssgen/rumble/<channel>`
 2. `https://banned.video` - `https://<selfhost.server>/rssgen/banned-video/<channel>`
 
-> Originally inspired by: `https://github.com/alexandersokolow/rss-gen`
+> Originally inspired by: <https://github.com/alexandersokolow/rss-gen>
 
 ## Installation
 Assuming you have set up a server with git and npm:
@@ -18,17 +18,17 @@ Assuming you have set up a server with git and npm:
 
 ### Troubleshooting
 If you run into issues with puppeteer, take a look at these resources:
-- [puppeteer on github](https://github.com/puppeteer/puppeteer)
-- [puppeteer troubleshooting site](https://pptr.dev/troubleshooting)
+- [https://github.com/puppeteer/puppeteer](https://github.com/puppeteer/puppeteer "puppeteer on github")
+- [https://pptr.dev/troubleshooting](https://pptr.dev/troubleshooting "puppeteer troubleshooting site")
 
 ## Development
 To add your own favourite website to the list of supported sites, create a handler in `app/handlers`.
 The name of the file will be the part in the url for queries.
 
-The only requirements for a handler are exporting the code for app.js to read
+The only requirements for a handler are exporting the code for app.js
 ```
 module.exports = async function(target) {
 	// your code
 };
 ```
-and the format of the return value to be of the form like in the file `app/rssgen_format.txt`;
+and the format of the return value to be of form like in the file `app/rssgen_format.txt`;
