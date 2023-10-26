@@ -130,9 +130,4 @@ dist
 .pnp.*
 
 # custom ignores
-<<<<<<< HEAD
 dev/html/*
-=======
-myuseragent.txt
-dev/
->>>>>>> refs/remotes/origin/master
