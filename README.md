@@ -7,14 +7,14 @@ Currently supported websites include:
 > Originally inspired by: <https://github.com/alexandersokolow/rss-gen>
 
 ## Installation
-Assuming you have set up a server with git and npm:
+Assuming you have set up a server with git and npm, as well as a webserver with proxy_pass from port 3000 to 80:
 1. transfer the project's source code to your server: `git clone https://github.com/elias-boemeke/rssgen.git`
 2. install the required node modules: `cd rssgen/app && npm install`
 3. install pm2 globally for easier process management: `npm install pm2 -g`
 4. make the app run in production mode in the background: `npm run production`
 5. make the app run indefinitely: `pm2 save && pm2 startup`
 
-> Recommended user stack: debian/nodejs/newsboat
+> Recommended user stack: debian/nginx/nodejs -> newsboat
 
 ### Troubleshooting
 If you run into issues with puppeteer, take a look at these resources:
