@@ -126,7 +126,7 @@ function extract_aboutpage(html) {
 }
 
 function extract_altpage(html) {
-	return extract_channel(html, 'listing-header--title-wrapper');
+	return extract_channel(html, 'listing-header--title');
 }
 
 function extract_channel(html, title_class) {
