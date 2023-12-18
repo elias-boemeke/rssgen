@@ -62,11 +62,15 @@ async function compose(target) {
 	}
 
 	// now extract info about the videos
-	let promises = [];
+	// let promises = [];
+	// for (let element of video_listing_entrys) {
+	// 	promises.push(compose_item(element));
+	// }
+	// let items = await Promise.all(promises);
+	let items = [];
 	for (let element of video_listing_entrys) {
-		promises.push(compose_item(element));
+		items.push(await compose_item(element));
 	}
-	let items = await Promise.all(promises);
 	// sort items
 	items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 	// put items into rss
@@ -138,7 +142,8 @@ function extract_channel(html, title_class) {
 	// [channel] title
 	info.title = $(`.${title_class} > h1`).text();
 	// [items] link, *duration, title, pubDate, *status
-	const vles = $('.video-listing-entry').map((_, element) => {
+	console.log($('.videostream.thumbnail__grid--item').length);
+	const vles = $('.videostream.thumbnail__grid--item').map((_, element) => {
 		let status = 'archived';
 		if ($(element).find('.video-item--upcoming').length > 0) {
 			status = 'upcoming';
@@ -147,10 +152,10 @@ function extract_channel(html, title_class) {
 		}
 		// put together the items
 		let vle = {
-			'link': `https://rumble.com${$(element).find('.video-item .video-item--a').attr('href')}`,
-			'duration': $(element).find('.video-item .video-item--a .video-item--duration').attr('data-value'),
-			'title': $(element).find('.video-item .video-item--info .video-item--title').text(),
-			'pubDate': $(element).find('.video-item .video-item--info .video-item--meta.video-item--time').attr('datetime'),
+			'link': `https://rumble.com${$(element).find('.title__link.link').attr('href')}`,
+			'duration': $(element).find('.videostream__badge.videostream__status.videostream__status--duration').text(),
+			'title': $(element).find('.thumbnail__title.clamp-2').text(),
+			'pubDate': $(element).find('.videostream__data--subitem.videostream__time').attr('datetime'),
 			'status': status,
 		};
 		return vle;

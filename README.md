@@ -1,4 +1,6 @@
 # rssgen
+RUMBLE HAS CHANGED ITS API. RUMBLE HANDLER BROKEN, DONT USE.
+
 **rssgen** is a NodeJS server application for self-hosting an rss-feed-generator.
 Currently supported websites include:
 1. `https://rumble.com` - `https://<selfhost.server>/rssgen/rumble/<channel>`
