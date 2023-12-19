@@ -20,6 +20,10 @@ module.exports = {
 // constants
 const c_gray = '\x1b[90m%s\x1b[0m';
 
+async function sleep(ms) {
+    await new Promise(resolve => { return setTimeout(resolve, ms); });
+}
+
 // takes url
 // return html associated with the url
 async function crawl_url(url, options) {
@@ -38,8 +42,11 @@ async function crawl_url(url, options) {
 		for (let element of funs) {
 			if (options.method === element[0]) {
 				if (element[0].includes('puppeteer')) {
+					// execute crawl function
 					return await element[1](url, options.browser);
 				} else {
+					if (options.delay) { await sleep(options.delay); }
+					// execute crawl function
 					return await element[1](url);
 				}
 			}

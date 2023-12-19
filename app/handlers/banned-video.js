@@ -34,8 +34,7 @@ async function compose(target) {
 	// now extract info about the videos / synchronous
 	let items = [];
 	for (let element of video_listing_entrys) {
-		let r = await compose_item(element); // actually wait for the result to arrive
-		items.push(r);
+		items.push(await compose_item(element));
 	}
 	// sort items
 	items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
