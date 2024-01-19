@@ -52,12 +52,14 @@ async function compose(target) {
 	let videostream_entrys;
 	if (alt_mode) {
 		html_alt = await crawl_rumble(url_alt);
-		const info_alt = extract_altpage(html_alt);
+		// const info_alt = extract_altpage(html_alt);
+		// api got changed and is consistent with new channels now
+		const info_alt = extract_mainpage(html_alt);
 
 		rss.channel.title = info_alt.title;
 		rss.channel.link = url_alt;
 		rss.channel.description = '';
-		videostream_entrys = info_alt.video_listing_entrys;
+		videostream_entrys = info_alt.videostream_entrys;
 	} else {
 		// remember html_main has succeeded
 		html_about = await crawl_rumble(url_about);
@@ -125,6 +127,7 @@ async function compose_item(videostream_entry) {
 // ###   html extraction functions   ###
 // #####################################
 
+// HINT: in cheerio selection, space means 'or' and chained dot means 'and'
 
 function extract_altpage(html) {
 	let info = {
