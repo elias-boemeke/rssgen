@@ -168,7 +168,8 @@ function extract_mainpage(html) {
 	// [channel] title
 	info.title = $('.channel-header--title-wrapper > h1').text();
 	// [items] link, *duration, title, pubDate, *status
-	const vles = $('.videostream.thumbnail__grid--item').map((_, element) => {
+	const thumbnailgrid = $('.thumbnail__grid');
+	const vles = thumbnailgrid.find('.videostream.thumbnail__grid--item').map((_, element) => {
 		let status = 'archived';
 		if ($(element).find('.videostream__status--upcoming').length > 0) {
 			status = 'upcoming';
@@ -181,7 +182,7 @@ function extract_mainpage(html) {
 		let vle = {
 			'link': `https://rumble.com${$(element).find('.videostream__link.link').attr('href')}`,
 			'duration': $(element).find('.videostream__badge.videostream__status.videostream__status--duration').text(),
-			'title': $(element).find('.thumbnail__title.clamp-2').text(),
+			'title': $(element).find('.thumbnail__title.line-clamp-2').text(),
 			'pubDate': $(element).find('.videostream__data--subitem.videostream__time').attr('datetime'),
 			'status': status,
 		};

@@ -2,7 +2,7 @@
 **rssgen** is a NodeJS server application for self-hosting an rss-feed-generator.
 Currently supported websites include:
 1. `https://rumble.com` - `https://<selfhost.server>/rssgen/rumble/<channel>`
-2. `https://banned.video` - `https://<selfhost.server>/rssgen/banned-video/<channel>`
+2. `https://banned.video` - `https://<selfhost.server>/rssgen/banned-video/<channel>` (currently blocked by Cloudflare)
 
 > Originally inspired by: <https://github.com/alexandersokolow/rss-gen>
 
