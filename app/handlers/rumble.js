@@ -166,7 +166,7 @@ function extract_mainpage(html) {
 	};
 	let $ = cheerio.load(html);
 	// [channel] title
-	info.title = $('.channel-header--title > h1').text();
+	info.title = $('.channel-header--title h1').text();
 	// [items] link, *duration, title, pubDate, *status
 	const thumbnailgrid = $('.thumbnail__grid');
 	const vles = thumbnailgrid.find('.videostream.thumbnail__grid--item').map((_, element) => {
