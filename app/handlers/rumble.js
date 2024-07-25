@@ -13,7 +13,7 @@ const cache_dir = '.cache/rumble';
 
 async function crawl_rumble(url) {
 	// return await crawl.crawl_url(url, {method: 'axios', delay: '2000'});
-	return await crawl.crawl_url(url, {method: 'puppeteer_stealth'})
+	return await crawl.crawl_url(url, {method: 'puppeteer_stealth'});
 }
 
 async function compose(target) {
@@ -45,7 +45,7 @@ async function compose(target) {
 		}
 	}
 	// check for puppeteer alt mode
-	if (cheerio.load(html_main)('.channel-header--title-wrapper').length == 0) {
+	if (cheerio.load(html_main)('.channel-header--title').length == 0) {
 		alt_mode = true;
 	}
 
@@ -65,7 +65,7 @@ async function compose(target) {
 		html_about = await crawl_rumble(url_about);
 		const info_main = extract_mainpage(html_main);
 		const info_about = extract_aboutpage(html_about);
-		
+
 		rss.channel.title = info_main.title;
 		rss.channel.link = url_main;
 		rss.channel.description = info_about.description;
@@ -166,7 +166,7 @@ function extract_mainpage(html) {
 	};
 	let $ = cheerio.load(html);
 	// [channel] title
-	info.title = $('.channel-header--title-wrapper > h1').text();
+	info.title = $('.channel-header--title > h1').text();
 	// [items] link, *duration, title, pubDate, *status
 	const thumbnailgrid = $('.thumbnail__grid');
 	const vles = thumbnailgrid.find('.videostream.thumbnail__grid--item').map((_, element) => {
